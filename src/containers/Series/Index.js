@@ -18,11 +18,12 @@ export default class Series extends Component {
     // 
   }
   onSeriesInputChange = e => {
+    // this.setState({ seriesName: e.target.value, isFetching: true })
     this.setState({ seriesName: e.target.value, isFetching: true })
     fetch(`http://api.tvmaze.com/search/shows?q=${e.target.value}`)
       .then((response => response.json()))
       .then(json => this.setState({ series: json, isFetching: false }))
-    // console.log(e);
+    console.log(e);
     // this.setState({
     //   input: e.target.value
     // })
