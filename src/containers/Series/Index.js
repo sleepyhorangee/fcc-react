@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import SeriesList from '../../components/SeriesList/SeriesList'
+import Loader from '../../components/Loader'
+import Intro from '../../components/Intro'
 
 export default class Series extends Component {
   state = {
@@ -13,13 +15,13 @@ export default class Series extends Component {
     // setTimeout(() => {
     //   this.setState({ series})
     // }, 2000)
-
+    // 
   }
   onSeriesInputChange = e => {
     this.setState({ seriesName: e.target.value, isFetching: true })
     fetch(`http://api.tvmaze.com/search/shows?q=${e.target.value}`)
       .then((response => response.json()))
-      .then(json => this.setState({ series: json }))
+      .then(json => this.setState({ series: json, isFetching: false }))
     // console.log(e);
     // this.setState({
     //   input: e.target.value
@@ -31,6 +33,8 @@ export default class Series extends Component {
 
     return (
       <div>
+        <Intro message="Here you can find all of your most loved series " />
+
         {/* The length of series array: {this.state.series.length} */}
         <div>
           <input
@@ -47,7 +51,7 @@ export default class Series extends Component {
           && <p>No tv series have been found with this name</p>
         }
         {
-          isFetching && <p>Loading...</p>
+          isFetching && <Loader />
         }
         {
           !isFetching && <SeriesList list={this.state.series} />
